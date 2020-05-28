@@ -1,0 +1,9 @@
+.btn2x {
+    width: 32px;
+    height: 36px;
+    color: gray;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+}
