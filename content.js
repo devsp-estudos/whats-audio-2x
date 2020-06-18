@@ -2,7 +2,9 @@ const _header_ = '#side header'
 const _containerContacts_ = '.-GlrD._2xoTX'
 const _attributeSelectContact_ = 'aria-selected'
 const _containerMessages_ = '.z_tTQ'
+
 let _speed_ = 2.0
+let actived = false
 
 
 const idInterval = setInterval(() => {
@@ -20,6 +22,13 @@ const idInterval = setInterval(() => {
     header.appendChild(button)
 
 }, 1000)
+
+function selectSpeed(speedString) {
+    _speed_ = Number(speedString)
+    document.querySelector('.btn2x').innerHTML = `${speedString}x`
+
+    console.log(speedString)
+}
 
 function audioSpeed(containerMessages) {
     let audios = document.querySelectorAll('audio')
