@@ -1,12 +1,19 @@
+const _header_ = '#side header'
+const _containerContacts_ = '.-GlrD._2xoTX'
+const _attributeSelectContact_ = 'aria-selected'
+const _containerMessages_ = '.z_tTQ'
+let _speed_ = 2.0
+
+
 const idInterval = setInterval(() => {
 
-    const header = document.querySelector('#side header')
+    const header = document.querySelector(_header_)
     if (!header) return
 
     clearInterval(idInterval)
 
     const button = document.createElement('button')
-    button.innerHTML = '2.0x'
+    button.innerHTML = `${_speed_}x`
     button.classList.add('btn2x')
     button.addEventListener('click', observerSelectContact)
 
@@ -15,17 +22,11 @@ const idInterval = setInterval(() => {
 }, 1000)
 
 function audioSpeed(containerMessages) {
-    console.log('---audioSpeed---')
-
     let audios = document.querySelectorAll('audio')
 
-    if (containerMessages) {
-        console.log(audios)
-        audios = containerMessages.querySelectorAll('audio')
-    }
+    if (containerMessages) audios = containerMessages.querySelectorAll('audio')
 
     console.log(audios)
-
     audios.forEach(audio => audio.playbackRate = 2.0)
 }
 
@@ -33,17 +34,19 @@ function observerSelectContact() {
     console.log('click')
 
     const idInterval = setInterval(() => {
-        const containerContacts = document.querySelector('.-GlrD._2xoTX')
+        const containerContacts = document.querySelector(_containerContacts_)
 
         if (!containerContacts) return
 
         clearInterval(idInterval)
 
+        observerContainerMessage()
+
         const observer = new MutationObserver((mutationsList, observer) => {
             observerContainerMessage()
         })
 
-        observer.observe(containerContacts, { attributes: true, attributeFilter: ["aria-selected"], subtree: true })
+        observer.observe(containerContacts, { attributes: true, attributeFilter: [_attributeSelectContact_], subtree: true })
 
         // observer.disconnect()
     }, 1000)
@@ -51,7 +54,7 @@ function observerSelectContact() {
 
 function observerContainerMessage() {
     const idInterval = setInterval(() => {
-        const containerMessages = document.querySelector('.z_tTQ')
+        const containerMessages = document.querySelector(_containerMessages_)
 
         if (!containerMessages) return
 
