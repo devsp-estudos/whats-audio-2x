@@ -3,7 +3,7 @@ const _containerContacts_ = '.-GlrD._2xoTX'
 const _attributeSelectContact_ = 'aria-selected'
 const _containerMessages_ = '.z_tTQ'
 
-let _speed_ = 2.0
+let _speed_ = 1.0
 let actived = false
 
 
@@ -17,7 +17,7 @@ const idInterval = setInterval(() => {
     const container = document.createElement('div')
     container.classList.add('container')
     container.innerHTML = `
-        <button class="btn2x">2.0x</button>
+        <button class="btn2x">${_speed_}x</button>
         <ul class="list">
             <li name="1.0">1.0</li>
             <li name="1.5">1.5</li>
@@ -43,7 +43,13 @@ const speed = {
         _speed_ = Number(speedString)
         document.querySelector('.btn2x').innerHTML = `${speedString}x`
 
-        selectContact.observe()
+        if (speedString !== '1.0') {
+            selectContact.observe()
+        } else {
+            selectContact.disconnect()
+            containerMessage.disconnect()
+            speed.accelerate()
+        }
     },
 
     accelerate: (containerMessages) => {
@@ -71,6 +77,7 @@ const selectContact = {
 
             const observer = new MutationObserver((mutationsList, observer) => {
                 containerMessage.observe()
+                console.log(mutationsList)
             })
 
             observer.observe(containerContacts, { attributes: true, attributeFilter: [_attributeSelectContact_], subtree: true })
@@ -80,8 +87,10 @@ const selectContact = {
     },
 
     disconnect: () => {
-        selectContact.objObserver.disconnect()
-        selectContact.objObserver = null
+        if (selectContact.objObserver) {
+            selectContact.objObserver.disconnect()
+            selectContact.objObserver = null
+        }
     }
 }
 
@@ -98,7 +107,10 @@ const containerMessage = {
 
             clearInterval(idInterval)
 
-            const observer = new MutationObserver((mutationsList, observer) => speed.accelerate())
+            const observer = new MutationObserver((mutationsList, observer) => {
+                speed.accelerate()
+                console.log(mutationsList)
+            })
 
             observer.observe(containerMessages, { childList: true })
 
@@ -107,7 +119,9 @@ const containerMessage = {
     },
 
     disconnect: () => {
-        containerMessage.objObserver.disconnect()
-        containerMessage.objObserver = null
+        if (containerMessage.objObserver) {
+            containerMessage.objObserver.disconnect()
+            containerMessage.objObserver = null
+        }
     }
 }
