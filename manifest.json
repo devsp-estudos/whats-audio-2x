@@ -8,10 +8,10 @@
                 "https://web.whatsapp.com/"
             ],
             "css": [
-                "style.css"
+                "src/style.css"
             ],
             "js": [
-                "content.js"
+                "src/content.js"
             ]
         }
     ]
