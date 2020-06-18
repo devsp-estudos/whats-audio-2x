@@ -42,7 +42,7 @@ function selectSpeed(event) {
     _speed_ = Number(speedString)
     document.querySelector('.btn2x').innerHTML = `${speedString}x`
 
-    console.log(speedString)
+    selectContact.observe()
 }
 
 function audioSpeed(containerMessages) {
@@ -51,45 +51,61 @@ function audioSpeed(containerMessages) {
     if (containerMessages) audios = containerMessages.querySelectorAll('audio')
 
     console.log(audios)
-    audios.forEach(audio => audio.playbackRate = 2.0)
+    audios.forEach(audio => audio.playbackRate = _speed_)
 }
 
-function observerSelectContact() {
-    console.log('click')
+const selectContact = {
+    objObserver: null,
 
-    const idInterval = setInterval(() => {
-        const containerContacts = document.querySelector(_containerContacts_)
+    observe: () => {
+        const idInterval = setInterval(() => {
+            const containerContacts = document.querySelector(_containerContacts_)
 
-        if (!containerContacts) return
+            if (!containerContacts) return
 
-        clearInterval(idInterval)
+            clearInterval(idInterval)
 
-        observerContainerMessage()
+            containerMessage.observe()
 
-        const observer = new MutationObserver((mutationsList, observer) => {
-            observerContainerMessage()
-        })
+            const observer = new MutationObserver((mutationsList, observer) => {
+                containerMessage.observe()
+            })
 
-        observer.observe(containerContacts, { attributes: true, attributeFilter: [_attributeSelectContact_], subtree: true })
+            observer.observe(containerContacts, { attributes: true, attributeFilter: [_attributeSelectContact_], subtree: true })
 
-        // observer.disconnect()
-    }, 1000)
+            containerMessage.objObserver = observer
+        }, 1000)
+    },
+
+    disconnect: () => {
+        selectContact.objObserver.disconnect()
+        selectContact.objObserver = null
+    }
 }
 
-function observerContainerMessage() {
-    const idInterval = setInterval(() => {
-        const containerMessages = document.querySelector(_containerMessages_)
+const containerMessage = {
+    objObserver: null,
 
-        if (!containerMessages) return
+    observe: () => {
+        const idInterval = setInterval(() => {
+            const containerMessages = document.querySelector(_containerMessages_)
 
-        setTimeout(() => audioSpeed(containerMessages), 300)
+            if (!containerMessages) return
 
-        clearInterval(idInterval)
+            setTimeout(() => audioSpeed(containerMessages), 200)
 
-        const observer = new MutationObserver((mutationsList, observer) => audioSpeed())
+            clearInterval(idInterval)
 
-        observer.observe(containerMessages, { childList: true })
+            const observer = new MutationObserver((mutationsList, observer) => audioSpeed())
 
-        // observer.disconnect()
-    }, 1000)
+            observer.observe(containerMessages, { childList: true })
+
+            containerMessage.objObserver = observer
+        }, 1000)
+    },
+
+    disconnect: () => {
+        containerMessage.objObserver.disconnect()
+        containerMessage.objObserver = null
+    }
 }
