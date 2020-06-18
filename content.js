@@ -14,16 +14,31 @@ const idInterval = setInterval(() => {
 
     clearInterval(idInterval)
 
-    const button = document.createElement('button')
-    button.innerHTML = `${_speed_}x`
-    button.classList.add('btn2x')
-    button.addEventListener('click', observerSelectContact)
+    const container = document.createElement('div')
+    container.classList.add('container')
+    container.innerHTML = `
+        <button onclick="selectSpeed('btn')" class="btn2x">2.0x</button>
+        <ul class="list">
+            <li name="1.0">1.0</li>
+            <li name="1.5">1.5</li>
+            <li name="1.7">1.7</li>
+            <li name="2.0">2.0</li>
+            <li name="2.3">2.3</li>
+            <li name="2.7">2.7</li>
+            <li name="3.0">3.0</li>
+        </ul>
+    `
+    container.querySelectorAll('li').forEach(li => li.addEventListener('click', selectSpeed))
 
-    header.appendChild(button)
+    header.appendChild(container)
 
 }, 1000)
 
-function selectSpeed(speedString) {
+function selectSpeed(event) {
+    if (!event) return
+
+    const speedString = event.target.innerHTML
+
     _speed_ = Number(speedString)
     document.querySelector('.btn2x').innerHTML = `${speedString}x`
 
