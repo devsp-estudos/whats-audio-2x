@@ -17,7 +17,7 @@ const idInterval = setInterval(() => {
     const container = document.createElement('div')
     container.classList.add('container')
     container.innerHTML = `
-        <button onclick="selectSpeed('btn')" class="btn2x">2.0x</button>
+        <button class="btn2x">2.0x</button>
         <ul class="list">
             <li name="1.0">1.0</li>
             <li name="1.5">1.5</li>
@@ -28,30 +28,32 @@ const idInterval = setInterval(() => {
             <li name="3.0">3.0</li>
         </ul>
     `
-    container.querySelectorAll('li').forEach(li => li.addEventListener('click', selectSpeed))
+    container.querySelectorAll('li').forEach(li => li.addEventListener('click', speed.select))
 
     header.appendChild(container)
 
 }, 1000)
 
-function selectSpeed(event) {
-    if (!event) return
+const speed = {
+    select: (event) => {
+        if (!event) return
 
-    const speedString = event.target.innerHTML
+        const speedString = event.target.innerHTML
 
-    _speed_ = Number(speedString)
-    document.querySelector('.btn2x').innerHTML = `${speedString}x`
+        _speed_ = Number(speedString)
+        document.querySelector('.btn2x').innerHTML = `${speedString}x`
 
-    selectContact.observe()
-}
+        selectContact.observe()
+    },
 
-function audioSpeed(containerMessages) {
-    let audios = document.querySelectorAll('audio')
+    accelerate: (containerMessages) => {
+        let audios = document.querySelectorAll('audio')
 
-    if (containerMessages) audios = containerMessages.querySelectorAll('audio')
+        if (containerMessages) audios = containerMessages.querySelectorAll('audio')
 
-    console.log(audios)
-    audios.forEach(audio => audio.playbackRate = _speed_)
+        console.log(audios)
+        audios.forEach(audio => audio.playbackRate = _speed_)
+    }
 }
 
 const selectContact = {
@@ -92,11 +94,11 @@ const containerMessage = {
 
             if (!containerMessages) return
 
-            setTimeout(() => audioSpeed(containerMessages), 200)
+            setTimeout(() => speed.accelerate(containerMessages), 200)
 
             clearInterval(idInterval)
 
-            const observer = new MutationObserver((mutationsList, observer) => audioSpeed())
+            const observer = new MutationObserver((mutationsList, observer) => speed.accelerate())
 
             observer.observe(containerMessages, { childList: true })
 
