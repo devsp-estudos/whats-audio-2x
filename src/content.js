@@ -44,8 +44,6 @@ const speed = {
         document.querySelector('.btn2x').innerHTML = `${speedString}x`
 
         if (speedString !== '1.0') {
-            console.log(actived)
-
             if (actived) {
                 speed.accelerate()
             } else {
@@ -65,7 +63,6 @@ const speed = {
 
         if (containerMessages) audios = containerMessages.querySelectorAll('audio')
 
-        console.log(audios)
         audios.forEach(audio => audio.playbackRate = _speed_)
     }
 }
@@ -85,7 +82,6 @@ const selectContact = {
 
             const observer = new MutationObserver((mutationsList, observer) => {
                 containerMessage.observe()
-                console.log(mutationsList)
             })
 
             observer.observe(containerContacts, { attributes: true, attributeFilter: [_attributeSelectContact_], subtree: true })
@@ -117,7 +113,6 @@ const containerMessage = {
 
             const observer = new MutationObserver((mutationsList, observer) => {
                 speed.accelerate()
-                console.log(mutationsList)
             })
 
             observer.observe(containerMessages, { childList: true })
