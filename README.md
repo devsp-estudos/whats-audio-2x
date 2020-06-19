@@ -16,12 +16,13 @@ Uma extensão para o Chrome que vai te permitir acelerar o áudio do WhatsApp em
 
 ## :page_with_curl: Sobre
 
-Esse foi um projeto feito acompanhando um video do canal do [Programador BR](https://www.youtube.com/channel/UC5WWNfEzz8gOzijWT9tsW8w) - [Criando uma Extensão para acelerar os audios do Whatsapp, do zero em menos de 20 min.](https://www.youtube.com/watch?v=j0Ih1xVyKbY) É uma projeto bem simples e com pouco código, mas aborda o conceito de extensão o que foi algo novo pra mim, e abre um leque para as possibilidades de coisas que podem ser feitas com elas, nos comentários do video no youtube tem o link para uma versão mais completa feito pelo Programador BR.
+Esse foi um projeto feito acompanhando um video do canal do [Programador BR](https://www.youtube.com/channel/UC5WWNfEzz8gOzijWT9tsW8w) - [Criando uma Extensão para acelerar os audios do Whatsapp, do zero em menos de 20 min.](https://www.youtube.com/watch?v=j0Ih1xVyKbY) É uma projeto bem simples e com pouco código, mas aborda o conceito de extensão o que foi algo novo pra mim, e abre um leque para as possibilidades de coisas que podem ser feitas, seguindo o vídeo a extensão não fica 100% quando vc carrega mais conversas ou muda para uma nova conversa, acaba que vc precisa ficar clicando novamente no botão de acelerar o áudio, o que não é legal, então eu implementei uma API nativa chamada MutationObserver, que consegue ficar observando quando um elemento sobre alterações no DOM e dispara eventos, assim sempre que carrega novas mensagens os áudios já são acelerados automaticamente, foi bacana essa funcionalidade, e um aprendizado novo.
 
 ## :rocket: Tecnologias Utilizadas
 
-* [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 * [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+* [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+    - [API Nativa MutationObserver](https://javascript.info/mutation-observer)
 
 ## :gear: Requisitos
 
