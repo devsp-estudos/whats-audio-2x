@@ -17,7 +17,7 @@ const idInterval = setInterval(() => {
     const container = document.createElement('div')
     container.classList.add('container')
     container.innerHTML = `
-        <button class="btn2x">${_speed_}x</button>
+        <button class="btn2x">1.0x</button>
         <ul class="list">
             <li name="1.0">1.0</li>
             <li name="1.5">1.5</li>
@@ -44,10 +44,18 @@ const speed = {
         document.querySelector('.btn2x').innerHTML = `${speedString}x`
 
         if (speedString !== '1.0') {
-            selectContact.observe()
+            console.log(actived)
+
+            if (actived) {
+                speed.accelerate()
+            } else {
+                actived = true
+                selectContact.observe()
+            }
         } else {
             selectContact.disconnect()
             containerMessage.disconnect()
+            actived = false
             speed.accelerate()
         }
     },
@@ -82,7 +90,7 @@ const selectContact = {
 
             observer.observe(containerContacts, { attributes: true, attributeFilter: [_attributeSelectContact_], subtree: true })
 
-            containerMessage.objObserver = observer
+            selectContact.objObserver = observer
         }, 1000)
     },
 
